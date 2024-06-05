@@ -1,19 +1,20 @@
 import { GoogleMap, Marker } from "@react-google-maps/api";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-export const DefaultMarker = () => {
+export const DefaultMarker = ({data}) => {
   const center = useMemo(() => ({ lat: 15.52043, lng: 73.856743 }), []);
 
-  const data = [
-    { lat: 15.52043, lng: 73.856743 },
-    { lat: 16.52043, lng: 73.856743 },
-    { lat: 17.52043, lng: 73.856743 },
-    { lat: 19.52043, lng: 73.856743 },
-    { lat: 15.52043, lng: 73.856743 },
-  ]
+  const [marker, setMarker] = useState([])
+  useEffect(() => {
+    console.log('render')
+    setMarker(data);
+  }, [data]);
+
+  console.log('marker', marker)
+
   return (
     <GoogleMap mapContainerClassName="map-container" center={center} zoom={10}>
-      {data.map((i,j) => (
+      {marker && marker.map((i,j) => (
         <div key={j}>
           <Marker position={i} />
       </div>
